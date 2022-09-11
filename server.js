@@ -34,7 +34,7 @@ function menuPrompt() {
           break;
 
         case "Update Employee Role":
-          updateEmployeeRole();
+          updateEmployee();
           break;
 
         case "View All Roles":
@@ -53,10 +53,51 @@ function menuPrompt() {
           addDepartment();
           break;
 
+        case "Quit Employee Tracker":
+          console.log("Thank you for using!");
+          process.exit();
         default:
           process.exit();
       }
     });
+}
+
+function viewEmployees() {
+  console.log("Here is a list of employees!:");
+  const sql = `SELECT * from employees`;
+  db.query(sql, (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      const table = cTable.getTable(results);
+      console.log(table);
+      menuPrompt();
+    }
+  });
+}
+
+function addEmployee() {
+  console.log("Who would you like to add?");
+}
+
+function updateEmployee() {
+  console.log("Who would you like to update?");
+}
+
+function viewRoles() {
+  console.log("Here is a list of roles!:");
+}
+
+function addRole() {
+  console.log("Which role would you like to add?");
+}
+
+function viewDepartments() {
+  console.log("Here is a list of departments!:");
+}
+
+function addDepartment() {
+  console.log("Which department would you like to add?");
 }
 
 function init() {
