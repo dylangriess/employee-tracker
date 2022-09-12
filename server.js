@@ -87,10 +87,19 @@ function addEmployee() {
         name: "last_name",
       },
       {
-        type: "input",
+        type: "list",
+        choices: [
+          { name: "Sales Lead", value: 1 },
+          { name: "Salesperson", value: 2 },
+          { name: "Lead Engineer", value: 3 },
+          { name: "Software Engineer", value: 4 },
+          { name: "Account Manager", value: 5 },
+          { name: "Accountant", value: 6 },
+          { name: "Legal Team Lead", value: 7 },
+          { name: "Lawyer", value: 8 },
+        ],
         message: "What is the employee's role?:",
         name: "role_id",
-        default: 1,
       },
       {
         type: "input",
@@ -190,7 +199,13 @@ function addRole() {
         name: "salary",
       },
       {
-        type: "input",
+        type: "list",
+        choices: [
+          { name: "Engineering", value: 1 },
+          { name: "Finance", value: 2 },
+          { name: "Legal", value: 3 },
+          { name: "Sales", value: 4 },
+        ],
         message: "What is the department ID for this role?",
         name: "department_id",
         default: 1,
