@@ -116,7 +116,37 @@ function addEmployee() {
 }
 
 function updateEmployee() {
-  console.log("Who would you like to update?");
+  let employees = [];
+  const sql = `SELECT employees.id, employees.first_name, employees.last_name FROM employees`;
+  db.query(sql, (err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+      employees = data.map();
+      inquirer
+        .prompt([
+          {
+            type: "list",
+            choices: employees,
+            message: "Choose an employee to update:",
+            name: "name",
+          },
+          {
+            type: "input",
+            message: "Please enter a new role for employee:",
+            name: "role_id",
+          },
+        ])
+        .then((choices) => {
+          db.query(
+            `INSERT INTO roles (title, salary, department_id) VALUES 
+      ("${choices.name}", "${choices.role_id}")`
+          );
+          console.log(`Role has been updated!`);
+          menuPrompt();
+        });
+    }
+  });
 }
 
 function viewRoles() {
@@ -180,7 +210,22 @@ function viewDepartments() {
 }
 
 function addDepartment() {
-  console.log("Which department would you like to add?");
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        message: "Please enter the name of the department:",
+        name: "department_name",
+      },
+    ])
+    .then((choices) => {
+      db.query(
+        `INSERT INTO departments (department_name) VALUES 
+      ("${choices.department_name}")`
+      );
+      console.log(`Department has been added!`);
+      menuPrompt();
+    });
 }
 
 function init() {
