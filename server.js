@@ -117,12 +117,14 @@ function addEmployee() {
 
 function updateEmployee() {
   let employees = [];
-  const sql = `SELECT employees.id, employees.first_name, employees.last_name FROM employees`;
-  db.query(sql, (err, data) => {
+  const sql = `SELECT * FROM employees`;
+  db.query(sql, (err, employee) => {
     if (err) {
       console.log(err);
     } else {
-      employees = data.map();
+      employees = employee.map(({ first_name, last_name }) => ({
+        name: `${first_name} ${last_name}`,
+      }));
       inquirer
         .prompt([
           {
@@ -139,11 +141,12 @@ function updateEmployee() {
         ])
         .then((choices) => {
           db.query(
-            `INSERT INTO roles (title, salary, department_id) VALUES 
-      ("${choices.name}", "${choices.role_id}")`
+            `UPDATE employees SET role_id = "${choices.role_id}" WHERE id = "${choices.name}"`,
+            (err, result) => {
+              console.log("Employee role has been updated!");
+              menuPrompt();
+            }
           );
-          console.log(`Role has been updated!`);
-          menuPrompt();
         });
     }
   });
