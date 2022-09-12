@@ -134,15 +134,28 @@ function updateEmployee() {
             name: "name",
           },
           {
-            type: "input",
-            message: "Please enter a new role for employee:",
+            type: "list",
+            choices: [
+              { name: "Sales Lead", value: 1 },
+              { name: "Salesperson", value: 2 },
+              { name: "Lead Engineer", value: 3 },
+              { name: "Software Engineer", value: 4 },
+              { name: "Account Manager", value: 5 },
+              { name: "Accountant", value: 6 },
+              { name: "Legal Team Lead", value: 7 },
+              { name: "Lawyer", value: 8 },
+            ],
+            message: "Please enter a new role ID for employee:",
             name: "role_id",
           },
         ])
         .then((choices) => {
           db.query(
-            `UPDATE employees SET role_id = "${choices.role_id}" WHERE id = "${choices.name}"`,
+            `UPDATE employees SET role_id = "${
+              choices.role_id
+            }" WHERE first_name = "${choices.name.split(" ")[0]}"`,
             (err, result) => {
+              if (err) throw err;
               console.log("Employee role has been updated!");
               menuPrompt();
             }
