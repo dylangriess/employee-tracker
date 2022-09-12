@@ -3,9 +3,6 @@ const inquirer = require("inquirer");
 const db = require("./assets/mysqlconnect");
 const cTable = require("console.table");
 
-const PORT = process.env.PORT || 3001;
-const app = express();
-
 function menuPrompt() {
   inquirer
     .prompt({
